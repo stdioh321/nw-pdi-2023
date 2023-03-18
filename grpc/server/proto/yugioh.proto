@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package yugioh;
+
+service YuGiOhService {
+  rpc searchCards(SearchCardsRequest) returns (SearchCardsResponse);
+}
+
+message SearchCardsRequest {
+  string searchQuery = 1;
+}
+
+message SearchCardsResponse {
+  repeated Card cards = 1;
+}
+
+message CardImage {
+  string id = 1;
+  string image_url = 2;
+  string image_url_small = 3;
+  string image_url_cropped = 4;
+}
+
+
+message Card {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string desc = 4;
+  string race = 5;
+  string attribute = 6;
+  string archetype = 7;
+  string level = 8;
+  string atk = 9;
+  string def = 10;
+  repeated CardImage card_images = 11;
+}
+

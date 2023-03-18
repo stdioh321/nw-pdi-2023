@@ -1,0 +1,15 @@
+{
+  "details": {
+    "endpoint": "http://localhost:50051",
+    "methodFqn": "yugioh.YuGiOhService.searchCards",
+    "mode": "grpc"
+  },
+  "requests": [
+    {
+      "location": "searchCards-request.json"
+    }
+  ],
+  "operationType": "unary",
+  "invokerName": "grpc",
+  "importStreamId": "49c586a8-7d5c-47c1-8d20-379f2a6f913e"
+}
