@@ -1,1 +1,65 @@
-../../proto/yugioh.proto
+syntax = "proto3";
+
+package yugioh;
+
+
+service YuGiOhService {
+  rpc searchCards(SearchCardsRequest) returns (SearchCardsResponse);
+}
+
+message SearchCardsRequest {
+  string searchQuery = 1;
+}
+
+message SearchCardsResponse {
+  repeated Card cards = 1;
+}
+
+message Card_sets {
+  string set_name = 1;
+  string set_code = 2;
+  string set_rarity = 3;
+  string set_rarity_code = 4;
+  string set_price = 5;
+}
+
+message Card_images {
+  uint32 id = 1;
+  string image_url = 2;
+  string image_url_small = 3;
+  string image_url_cropped = 4;
+}
+
+message Card_prices {
+  string cardmarket_price = 1;
+  string tcgplayer_price = 2;
+  string ebay_price = 3;
+  string amazon_price = 4;
+  string coolstuffinc_price = 5;
+}
+
+message Banlist_info {
+  string ban_tcg = 1;
+  string ban_ocg = 2;
+}
+
+message Card {
+  uint32 id = 1;
+  string name = 2;
+  string type = 3;
+  string frameType = 4;
+  string desc = 5;
+  string race = 6;
+  string archetype = 7;
+  repeated Card_sets card_sets = 8;
+  repeated Card_images card_images = 9;
+  repeated Card_prices card_prices = 10;
+  uint32 atk = 11;
+  uint32 def = 12;
+  uint32 level = 13;
+  string attribute = 14;
+  uint32 scale = 15;
+  uint32 linkval = 16;
+  repeated string linkmarkers = 17;
+  Banlist_info banlist_info = 18;
+}
