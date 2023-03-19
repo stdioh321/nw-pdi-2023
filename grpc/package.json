@@ -1,0 +1,17 @@
+{
+  "name": "grpc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:server": "cd server && npm install -f && cd .. && pkg server/index.js -o server.bin",
+    "build:client": "cd client && npm install -f && cd .. && pkg client/index.js -o client.bin",
+    "build": "npm run build:server && npm run build:client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pkg": "^5.8.1"
+  }
+}

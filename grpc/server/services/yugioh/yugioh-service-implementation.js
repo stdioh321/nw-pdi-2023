@@ -3,7 +3,7 @@ const { default: axios } = require("axios");
 function searchCards(call,callback) {
   let searchQuery = call.request.searchQuery;
   searchQuery = searchQuery.trim().toLowerCase();
-  const apiUrl = `${process.env.API_BASE_URL}?fname=${searchQuery}`;
+  const apiUrl = `${process.env.API_BASE_URL || 'https://db.ygoprodeck.com/api/v7/cardinfo.php'}?fname=${searchQuery}`;
 
   axios.get(apiUrl)
     .then((response) => {
