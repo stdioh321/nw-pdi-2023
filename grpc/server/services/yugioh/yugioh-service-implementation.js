@@ -13,8 +13,13 @@ function searchCards(call,callback) {
       });
     })
     .catch((error) => {
-      console.log(`[grpc/server/services/yugioh-service-implementation.js searchCards] Error: ${error?.message}`);
-      callback(err);
+      error.message = error?.response?.data?.error || error?.message || 'Server error';
+      if (error?.message?.match(/^No card matching your query was found in the database/)) {
+        callback(null,{ cards: [] })
+        return
+      }
+      console.log(`[grpc/server/services/yugioh-service-implementation.js searchCards] Error: ${error.message}`);
+      callback(error);
     });
 }
 
