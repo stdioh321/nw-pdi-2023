@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Server",
+      "name": "grpc: Server",
       "skipFiles": [
         "<node_internals>/**"
       ],
