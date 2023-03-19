@@ -10,7 +10,7 @@ const packageDefinition = protoLoader.loadSync(path.join(__dirname,'proto/yugioh
 });
 
 const protoDescriptor = grpc.loadPackageDefinition(packageDefinition).yugioh;
-const client = new protoDescriptor.YuGiOhService('localhost:50051',grpc.credentials.createInsecure(),{
+const client = new protoDescriptor.YuGiOhService(`${process.env.BASE_URL}:${process.env.PORT}`,grpc.credentials.createInsecure(),{
   'grpc.max_receive_message_length': 1024 * 1024 * 50
 });
 const request = {
