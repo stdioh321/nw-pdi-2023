@@ -10,7 +10,7 @@ This project is a web application that allows users to upload one or multiple fi
 1. Clone this repository
 ```sh
 git clone https://github.com/stdioh321/nw-pdi-2023.git
-cd stream
+cd nw-pdi-2023/stream
 ```
 2. Install dependencies
 ```sh
