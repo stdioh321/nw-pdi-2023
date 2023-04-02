@@ -1,4 +1,5 @@
 # Upload files and return as zip
+This project is a web application that allows users to upload one or multiple files through a web interface and receive a zip file containing their uploaded files as a response. The server side of the application uses Node.js and streams to efficiently handle large files and improve the overall performance of the application.
 
 # Getting Started
 ## Prerequisites
