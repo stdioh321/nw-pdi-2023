@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.set('views',path.join(__dirname,'/views'));
 app.engine('html',require('ejs').renderFile);
 app.set('view engine','html');
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/',(req,res) => {
   res.render('index')
