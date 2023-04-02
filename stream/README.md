@@ -28,7 +28,11 @@ npm run start
 3. Click the "Upload" button.
 4. The server will respond with a zipped file containing the uploaded files.
 ![Upload](docs/screenshots/01.png)
-
+5. (Optional) Using curl to upload file(s)
+   1. ```sh
+      curl -OJ -X POST -F "files=@$HOME/Downloads/eraseme.txt" -F "files=@$HOME/Downloads/image.jpeg"  http://localhost:3000
+      ```
+      ![Image02](docs/screenshots/02.png)
 # Built With
 * [Express](https://expressjs.com/) - Web framework for Node.js
 * [Multer](https://github.com/expressjs/multer) - Middleware for handling multipart/form-data
