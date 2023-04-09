@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Todo</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Edit Todo</h1>
+      <form method="post" action="/edit/<%= todo._id %>">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" class="form-control" value="<%= todo.name %>" />
+        </div>
+        <div class="form-group">
+          <label for="completed">Completed:</label>
+          <input type="checkbox" id="completed" name="completed" <%= todo.completed ? 'checked' : '' %> />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+      <a href="/" class="btn btn-secondary mt-3">Back to Todo List</a>
+    </div>
+    <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

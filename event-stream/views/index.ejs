@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Todo List</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Todo List</h1>
+    <form id="create-form" method="post" action="/create">
+      <div class="input-group mb-3">
+        <input type="text" id="name" name="name" class="form-control" placeholder="Enter todo item name" />
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Create Todo</button>
+        </div>
+      </div>
+    </form>
+    <ul id="todo-list" class="list-group">
+      <!-- Todo items will be dynamically loaded here -->
+    </ul>
+  </div>
+  <script src="/node_modules/axios/dist/axios.min.js"></script>
+  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded',function () {
+      loadTodos();
+    });
+
+    function loadTodos() {
+      axios.get('/api/todos')
+        .then(function (response) {
+          var todos = response.data;
+          var todoListHtml = "";
+          for (let i = 0; i < todos.length; i++) {
+            var todo = todos[i];
+            todoListHtml += '<li class="list-group-item">';
+            todoListHtml += todo.completed ? '<span class="badge badge-success">Complete</span>' : '<span class="badge badge-warning">Incomplete</span>';
+            todoListHtml += " " + todo.name;
+            todoListHtml += '<a href="/edit/' + todo._id + '" class="btn btn-primary btn-sm ml-2">Edit</a>';
+            todoListHtml += '<button class="btn btn-danger btn-sm ml-2 btn-delete-todo" data-id="' + todo._id + '">Delete</button>';
+            todoListHtml += '</li>';
+          }
+          document.getElementById('todo-list').innerHTML = todoListHtml;
+          addDeleteEvents();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
+    document.getElementById('create-form').addEventListener('submit',function (event) {
+      event.preventDefault();
+      var todoName = document.getElementById('name').value;
+      if (todoName.trim() != "") {
+        axios.post('/api/todos',{ name: todoName })
+          .then(function (response) {
+            loadTodos();
+            document.getElementById('name').value = "";
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    });
+    function addDeleteEvents() {
+      document.querySelectorAll('.btn-delete-todo').forEach(it => {
+        it.addEventListener('click',async (evt) => {
+          const id = evt.target.dataset.id
+
+          confirm("Realy delete?") && deleteTodo(id).then(res => {
+            loadTodos()
+          })
+        })
+      })
+    }
+    async function deleteTodo(id) {
+      if (id?.trim() != "") {
+        return await axios.delete('/api/todos/' + id)
+
+      }
+    }
+  </script>
+</body>
+
+</html>
