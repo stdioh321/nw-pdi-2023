@@ -4,6 +4,8 @@
 <head>
   <title>Todo List</title>
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+  <script src="/node_modules/socket.io-client/dist/socket.io.min.js"></script>
 </head>
 
 <body>
@@ -25,6 +27,14 @@
   <script src="/node_modules/jquery/dist/jquery.min.js"></script>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script>
+    const socket = io("http://localhost:3001",{
+      withCredentials: false
+    });
+
+    socket.on('srv:db-change', (id, changes) => {
+      console.log('db-change ', id, changes);
+      loadTodos()
+    })
     document.addEventListener('DOMContentLoaded',function () {
       loadTodos();
     });
@@ -82,6 +92,8 @@
 
       }
     }
+
+
   </script>
 </body>
 

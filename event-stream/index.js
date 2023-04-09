@@ -1,14 +1,25 @@
+const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const socketIo = require('socket.io');
+
 require('dotenv').config()
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server,{
+  cors: {
+    origin: "*",
+    credentials: false
+  }
+});
+
 const PORT = parseInt(process.env.PORT) || 3000;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/node_modules', express.static(__dirname + '/node_modules'));
+app.use('/node_modules',express.static(__dirname + '/node_modules'));
 app.set('view engine','ejs');
 
 mongoose.connect(process.env.MONGO01_URL,{
@@ -19,7 +30,7 @@ mongoose.connect(process.env.MONGO01_URL,{
 const todoSchema = new mongoose.Schema({
   name: {
     type: String,
-    required:true
+    required: true
   },
   completed: Boolean,
 });
@@ -64,6 +75,31 @@ app.delete('/api/todos/:id',async (req,res) => {
   res.json(await Todo.findByIdAndDelete(id));
 });
 
-app.listen(PORT,() => {
+
+const changeStream = Todo.watch();
+changeStream.on('change',(change) => {
+  console.log('Change event ',{
+    id: change?.documentKey._id,
+    operation: change?.operationType,
+    change: change
+  });
+  io.emit('srv:db-change',change?.documentKey._id ,change)
+});
+
+io.on('connection',(socket) => {
+  console.log('A user connected [ID]: ' + socket.id);
+
+  socket.on('clt:message',(msg) => {
+    console.log('Message:',msg);
+    socket.broadcast.emit('clt:message',msg);
+  });
+
+  // Socket.io disconnection event
+  socket.on('disconnect',() => {
+    console.log('A user disconnected');
+  });
+});
+
+server.listen(PORT,() => {
   console.log(`App listening at http://localhost:${PORT}`);
 });
