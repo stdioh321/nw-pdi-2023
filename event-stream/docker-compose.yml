@@ -1,11 +1,17 @@
-
 version: "3.8"
 
 services:
   mongo1:
     image: mongo:5
     container_name: mongo1
-    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30001"]
+    command:
+      [
+        "--replSet",
+        "my-replica-set",
+        "--bind_ip_all",
+        "--port",
+        "30001"
+      ]
     volumes:
       - ./db/mongo-1:/data/db
     ports:
@@ -18,7 +24,14 @@ services:
   mongo2:
     image: mongo:5
     container_name: mongo2
-    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30002"]
+    command:
+      [
+        "--replSet",
+        "my-replica-set",
+        "--bind_ip_all",
+        "--port",
+        "30002"
+      ]
     volumes:
       - ./db/mongo-2:/data/db
     ports:
@@ -27,8 +40,28 @@ services:
   mongo3:
     image: mongo:5
     container_name: mongo3
-    command: ["--replSet", "my-replica-set", "--bind_ip_all", "--port", "30003"]
+    command:
+      [
+        "--replSet",
+        "my-replica-set",
+        "--bind_ip_all",
+        "--port",
+        "30003"
+      ]
     volumes:
       - ./db/mongo-3:/data/db
     ports:
       - 30003:30003
+  app:
+    image: node:16-alpine
+    container_name: app
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - $PWD:/app
+    command: sh -c "npm install -f && sleep 3 && npm run start:dev"
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3

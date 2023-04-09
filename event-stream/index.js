@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/node_modules',express.static(__dirname + '/node_modules'));
 app.set('view engine','ejs');
 
-mongoose.connect(process.env.MONGO01_URL,{
+mongoose.connect(process.env.MONGO01_URL || "mongodb://mongo1:30001/db",{
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
