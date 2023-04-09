@@ -27,8 +27,9 @@
   <script src="/node_modules/jquery/dist/jquery.min.js"></script>
   <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script>
-    const socket = io("http://localhost:3000",{
-      withCredentials: false
+    const socket = io({
+      withCredentials: false,
+      port: 3000
     });
 
     socket.on('srv:db-change', (id, changes) => {
