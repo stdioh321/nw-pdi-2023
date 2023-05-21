@@ -1,0 +1,9 @@
+[submodule "git_sub_module/python-echo"]
+	path = git_sub_module/python-echo
+	url = https://github.com/stdioh321/python-echo.git
+[submodule "git_sub_module/python-crud-csv"]
+	path = git_sub_module/python-crud-csv
+	url = https://github.com/stdioh321/python-crud-csv.git
+[submodule "git_sub_module/Hello-World"]
+	path = git_sub_module/Hello-World
+	url = https://github.com/octocat/Hello-World
